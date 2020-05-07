@@ -20,7 +20,7 @@ Material UI
 To start using this application you have to clone or download this repository using
 
 ```
-git clone https://github.com/maticoder/react-crud-firebase.git
+git clone https://github.com/maticoder/todo-firebase-facebook-auth
 ```
 
 command
@@ -38,8 +38,8 @@ firebase serve
 npm start
 ```
 
-make also sure that you have got your own firebase project.
+make also sure that you have got your own firebase project. You have to change firebase.js file with your firebaseConfig and serviceAccountKey.json with your key to make this application work properly. You have to also change url to fetch data from firebase to your own url.
 
 ## How does it look like?
 
-![](https://github.com/maticoder/react-crud-firebase/blob/master/how.gif)
+![](https://github.com/maticoder/todo-firebase-facebook-auth/blob/master/how.gif)

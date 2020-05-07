@@ -3222,3 +3222,45 @@
 [info] i  functions: Finished "api" in ~1s
 [debug] [2020-04-28T12:25:49.746Z] [worker-api-7461baea-2a94-45b5-b4a2-2af4114b1895]: IDLE 
 [debug] [2020-04-28T12:25:49.746Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2020-05-07T16:39:29.192Z] ----------------------------------------------------------------------
+[debug] [2020-05-07T16:39:29.196Z] Command:       D:\Program Files\nodejs\node.exe C:\Users\wolde\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2020-05-07T16:39:29.196Z] CLI Version:   8.1.1
+[debug] [2020-05-07T16:39:29.196Z] Platform:      win32
+[debug] [2020-05-07T16:39:29.196Z] Node Version:  v12.4.0
+[debug] [2020-05-07T16:39:29.198Z] Time:          Thu May 07 2020 18:39:29 GMT+0200 (Central European Summer Time)
+[debug] [2020-05-07T16:39:29.198Z] ----------------------------------------------------------------------
+[debug] [2020-05-07T16:39:29.198Z] 
+[debug] [2020-05-07T16:39:29.208Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-05-07T16:39:29.208Z] > authorizing via signed-in user
+[debug] [2020-05-07T16:39:29.208Z] [iam] checking project todo-49517 for permissions ["firebase.projects.get"]
+[debug] [2020-05-07T16:39:29.212Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/todo-49517:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2020-05-07T16:39:30.295Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 07 May 2020 16:39:30 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=838","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-05-07T16:39:30.296Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/todo-49517  
+ 
+[debug] [2020-05-07T16:39:31.038Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 07 May 2020 16:39:31 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] === Serving from 'G:\Desktop\todo'...
+[info] 
+[warn] !  Your requested "node" version "8" doesn't match your global version "12"
+[info] +  functions: functions emulator started at http://localhost:5000
+[info] i  functions: Watching "G:\Desktop\todo\functions" for Cloud Functions...
+[debug] [2020-05-07T16:39:33.078Z] [worker-pool] addWorker(~diagnostic~) 
+[debug] [2020-05-07T16:39:33.079Z] [worker-pool] Adding worker with key ~diagnostic~, total=1 
+[debug] [2020-05-07T16:39:33.079Z] [worker-pool] submitWork(triggerId=) 
+[debug] [2020-05-07T16:39:33.079Z] [worker-~diagnostic~-7beed0be-0dc6-44f1-8438-5284c698a0b8]: Assigning socketPath: \\?\pipe\G:\Desktop\todo\functions\15752 
+[debug] [2020-05-07T16:39:33.080Z] [worker-~diagnostic~-7beed0be-0dc6-44f1-8438-5284c698a0b8]: BUSY 
+[debug] [2020-05-07T16:39:33.551Z] [runtime-status] [15752] Functions runtime initialized. {"cwd":"G:\\Desktop\\todo\\functions","node_version":"12.4.0"} 
+[debug] [2020-05-07T16:39:33.552Z] [runtime-status] [15752] Disabled runtime features: undefined 
+[debug] [2020-05-07T16:39:33.670Z] [runtime-status] [15752] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.11.0","resolution":"G:\\Desktop\\todo\\functions\\node_modules\\firebase-admin\\lib\\index.js"} 
+[debug] [2020-05-07T16:39:33.688Z] [runtime-status] [15752] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.1","resolution":"G:\\Desktop\\todo\\functions\\node_modules\\firebase-functions\\lib\\index.js"} 
+[debug] [2020-05-07T16:39:33.690Z] [runtime-status] [15752] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] 
+[debug] [2020-05-07T16:39:34.080Z] [runtime-status] [15752] Checked functions.config() {"config":{}} 
+[debug] [2020-05-07T16:39:34.080Z] [runtime-status] [15752] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.1","resolution":"G:\\Desktop\\todo\\functions\\node_modules\\firebase-functions\\lib\\index.js"} 
+[debug] [2020-05-07T16:39:34.082Z] [runtime-status] [15752] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.11.0","resolution":"G:\\Desktop\\todo\\functions\\node_modules\\firebase-admin\\lib\\index.js"} 
+[debug] [2020-05-07T16:39:34.083Z] [runtime-status] [15752] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.1","resolution":"G:\\Desktop\\todo\\functions\\node_modules\\firebase-functions\\lib\\index.js"} 
+[debug] [2020-05-07T16:39:34.084Z] [runtime-status] [15752] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"8.11.0","resolution":"G:\\Desktop\\todo\\functions\\node_modules\\firebase-admin\\lib\\index.js"}} 
+[debug] [2020-05-07T16:39:34.394Z] [runtime-status] [15752] initializeApp(DEFAULT) {"databaseURL":"https://todo-49517.firebaseio.com","storageBucket":"todo-49517.appspot.com","projectId":"todo-49517","credential":{"implicit":false,"projectId":"todo-49517","privateKey":"-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC8kVsBAXCFN1t8\nneUX65HTaP1lyZebbbMl3DFRX2gmkzYdURwAwABsIz2uKMpetI+R4FZhNAxHx4au\nop+wMiK8xLJtkppSnsPo8tqP4eFMFwFzK1Wj4CIaUm+v7HUPxTP95uCCKjDinFty\nn8GdzvqwLVTX5CtUQT+iNL5e0eB2/bq3kxLHtBAW+b1vT/8KWCryCJ6nisUxdiIZ\n4tCaWjDOM0bvqRtiWmq887IxnrqqQ2XVm8ACxO94yEwH0D1vkUxKbAkdQr2XCfxU\n8xYXlKO7zAiyWADYk2IhMeETIjXHKfW856lsD0KwEocDN0SPDJqNGaEDKmAQxwaZ\nc4LHPNDxAgMBAAECggEAHOrE2WfL8RSW/4pugOy7rVTK6IqcfhXkZK3FPwonUc8T\n0TVzMBGW9FOygvGMwy7jsMZbM3HaC5c8qgLqA95UYb1fnW+0zG8TcmGXryaVDb2e\nF81xRyhjzRnk4xtwV42cK6zLCLsJScnE46mTIAJcgvBDXrjbWi2IDCBpgedOiatG\nOal/BonQPL8IhguWC5EblZgVhNJcIRMZHXS77Kp6zgNiWXzq5Lnz6vjOuDtoJT4v\nUrLfqAqd/RySxtQBAKIl5OdQLSSADJ6uLulPs1yRvlmCId0m0o8Z/quRigNCmmub\nrAZsvq8vfQ2UaaMRYU2FW18VyN7ppEfnUqLcJKNzbwKBgQDmddjWIWKj8i6X4v+T\n0+ozY7e5nZbhBzQYVO0Yd6dNbUYqmXNDuYANTJKpjcUd6MiOq7hfxK13dKIsaHRs\n5uLVXjKSHUhwfcU4hnu6iy+3BYyxx8TP24OgYawvX3X/tx36zfBoaogjrUcDJIV2\nv4eP0lIDeX4YDrWsahbBGb763wKBgQDRdwSpdSXmf3wWN1CXLqgZaFhqI0m0RChM\nQ2HdVxsmpYw8IAYsl8/OrXj/i6KvQwO+U7IhDWlbYkRlVpTl2/Es8iVOSKDknxF8\nXyCYrWUloJxgktMO5aeOn2rKR8x6LvtOaTeenRNe+VwrH5kmkU5r0deR2wwkMpzH\nwcjiG61+LwKBgFH9k0t7TTCutMzswajCOAxYacDrxAYDHhGaBVAzIZ52RgRZ25w4\nnsoceAFCouJlMxUvGsVXn69kG15ZOzKTYhgvDybUrDT5SfU2Q0a2xh8DJm8Jd4fL\nvSSOG0gvWjfD2jKkmedMH2sx9pWzpJf+xCfy16LM0oOUmCXjCH1iv4NZAoGAX5fW\ni9OH0XK62ZSy9dv4IWhKeV3TZC56yZsyzYXUQUXqAwKGbtF1qBfpEY7TVvLZgYHG\n2Gi7fVYSasEhwOkoXt+/gMOKkeu6Wi07vhHcCFkNJNG8+p56Yo+Ed/5eZiCM1hMU\nrBF5Zq2cj52jEkPcKz6gB9OU7ewfOtbIa9A/1EcCgYEAwKZ0oFpH+5D8TZwlXFHL\nnbiR+iiL2WUwg4J60KthhLx/nMFXEBvbK01YI8/s1jVlbpvr+MjtDaGTSR3lZLhv\nKftBueHrdefXloLvo1l0xqVAulqInlQf3R6JBlBsfavotRgVazgqPM0JWn/jZLfm\ngcM+/HEAQHoIOoabmIQ4lPI=\n-----END PRIVATE KEY-----\n","clientEmail":"firebase-adminsdk-iigt6@todo-49517.iam.gserviceaccount.com","httpClient":{"retry":{"maxRetries":4,"statusCodes":[503],"ioErrorCodes":["ECONNRESET","ETIMEDOUT"],"backOffFactor":0.5,"maxDelayInMillis":60000}}}} 
+[warn] !  functions: The Cloud Firestore emulator is not running, so calls to Firestore will affect production.
+[info] +  functions[api]: http function initialized (http://localhost:5000/todo-49517/europe-west1/api).
+[debug] [2020-05-07T16:39:36.563Z] [worker-~diagnostic~-7beed0be-0dc6-44f1-8438-5284c698a0b8]: IDLE 
