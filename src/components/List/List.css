@@ -1,0 +1,11 @@
+.list {
+  text-align: center;
+}
+.list .table {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.list .logout-button {
+  margin-top: 10px;
+}
