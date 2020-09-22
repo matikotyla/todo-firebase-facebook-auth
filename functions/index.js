@@ -7,7 +7,7 @@ const serviceAccount = require("./serviceAccountKey.json");
 // initialize firebase application using given credentials
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://todo-49517.firebaseio.com",
+    databaseURL: "https://todo-a2508.firebaseio.com",
 });
 
 // access to the firestore
@@ -18,6 +18,7 @@ const app = require("express")();
 
 // cors policy
 const cors = require("cors");
+const { PriorityHigh } = require("@material-ui/icons");
 
 // check if user is a valid user with valid token
 const firebaseAuth = (req, res, next) => {
@@ -65,7 +66,22 @@ app.get("/", firebaseAuth, (req, res) => {
         .get()
         .then((doc) => {
             if (doc.exists) {
-                return res.status(200).json(doc.data());
+                doc.ref
+                    .collection("projects")
+                    .get()
+                    .then((snapshot) => {
+                        let data = {
+                            user: doc.data().user,
+                            projects: [],
+                        };
+                        snapshot.forEach((doc) => {
+                            data.projects.push(doc.data());
+                        });
+                        return res.status(200).json(data);
+                    })
+                    .catch((err) => {
+                        return res.status(500).json("Something went wrong");
+                    });
             } else {
                 return res.status(400).json("Invalid uid");
             }
@@ -79,7 +95,7 @@ app.get("/", firebaseAuth, (req, res) => {
 // add new todo
 app.post("/add", firebaseAuth, (req, res) => {
     // get todo
-    const { todo, time, date } = req.body;
+    const { project, todo, time, date } = req.body;
 
     // check if document with given id exists
     db.collection("/users")
@@ -88,17 +104,45 @@ app.post("/add", firebaseAuth, (req, res) => {
         .then((doc) => {
             // if the doc with given user uid exists, add new todo to the todos array
             if (doc.exists) {
-                doc.ref.update({
-                    todos: admin.firestore.FieldValue.arrayUnion({
-                        todo,
-                        time,
-                        date,
-                    }),
-                });
+                // check if the given project exists
+                doc.ref
+                    .collection("/projects")
+                    .where("name", "==", project)
+                    .get()
+                    .then((query) => {
+                        if (query.docs.length > 0) {
+                            // project exists
+                            query.docs[0].ref.update({
+                                todos: admin.firestore.FieldValue.arrayUnion({
+                                    todo,
+                                    time,
+                                    date,
+                                }),
+                            });
+                        } else {
+                            // project does not exist
+                            doc.ref.collection("/projects").add({
+                                name: project,
+                                todos: [
+                                    {
+                                        todo,
+                                        time,
+                                        date,
+                                    },
+                                ],
+                            });
+                        }
+                    })
+                    .catch((err) => console.log(err));
+
                 return res.status(200).json("Todo added");
-                // if the doc with given user uid does not exist, create new doc, add new todos array and username
+                // if the doc with given user uid does not exist, create new doc, add new projects and new todos array and username
             } else {
                 doc.ref.set({
+                    user: req.user.name,
+                });
+                doc.ref.collection("/projects").add({
+                    name: project,
                     todos: [
                         {
                             todo,
@@ -106,9 +150,10 @@ app.post("/add", firebaseAuth, (req, res) => {
                             date,
                         },
                     ],
-                    user: req.user.name,
                 });
-                return res.status(200).json("Doc created and todo added");
+                return res
+                    .status(200)
+                    .json("Doc created and project with todo added");
             }
         })
         .catch((err) => {
@@ -121,14 +166,17 @@ app.post("/add", firebaseAuth, (req, res) => {
 // edit existing todo
 app.put("/edit", firebaseAuth, (req, res) => {
     // get todo
-    const { index, todo, time, date } = req.body;
+    const { project, index, todo, time, date } = req.body;
 
     // check if the document with given id exists, if there is a given todo with index
     db.collection("/users")
         .doc(req.user.uid)
+        .collection("/projects")
+        .where("name", "==", project)
         .get()
-        .then((doc) => {
-            if (doc.exists) {
+        .then((snapshot) => {
+            if (snapshot.docs.length > 0) {
+                const doc = snapshot.docs[0];
                 let data = doc.data().todos;
                 data[index] = {
                     todo,
@@ -140,7 +188,7 @@ app.put("/edit", firebaseAuth, (req, res) => {
                 });
                 return res.status(200).json("Todo edited successfully");
             } else {
-                return res.status(400).json("Invalid user uid");
+                return res.status(400).json("Invalid project name");
             }
         })
         .catch((err) => {
@@ -149,17 +197,19 @@ app.put("/edit", firebaseAuth, (req, res) => {
         });
 });
 
-app.delete("/delete", firebaseAuth, (req, res) => {
+app.delete("/delete", (req, res) => {
     // get todo index
-    const { todo, time, date } = req.body;
+    const { project, todo, time, date } = req.body;
 
     // check if the document with given id exists
     db.collection("/users")
-        .doc(req.user.uid)
+        .doc("Ygd5ksXPIOOAA34MsL4dxNOCh313")
+        .collection("projects")
+        .where("name", "==", project)
         .get()
-        .then((doc) => {
-            if (doc.exists) {
-                // delete the object from array
+        .then((snapshot) => {
+            if (snapshot.docs.length > 0) {
+                const doc = snapshot.docs[0];
                 doc.ref.update({
                     todos: admin.firestore.FieldValue.arrayRemove({
                         todo,
@@ -169,7 +219,7 @@ app.delete("/delete", firebaseAuth, (req, res) => {
                 });
                 return res.status(200).json("Todo removed");
             } else {
-                return res.status(400).json("Invalid user uid");
+                return res.status(400).json("Invalid project name");
             }
         })
         .catch((err) => {

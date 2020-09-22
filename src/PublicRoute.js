@@ -10,7 +10,11 @@ function PublicRoute({ component: Component, ...rest }) {
         <Route
             {...rest}
             render={(routeProps) =>
-                !!!user ? <Component {...routeProps} /> : <Redirect to="/" />
+                !!!user ? (
+                    <Component {...routeProps} />
+                ) : (
+                    <Redirect to="/dashboard" />
+                )
             }
         />
     );

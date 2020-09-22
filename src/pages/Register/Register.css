@@ -1,4 +1,4 @@
-#login .login {
+#register .register {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -10,7 +10,7 @@
   padding-top: 70px;
 }
 
-#login .login .top {
+#register .register .top {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -30,7 +30,7 @@
           flex: 1;
 }
 
-#login .login .top .content {
+#register .register .top .content {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -44,7 +44,7 @@
           align-items: center;
 }
 
-#login .login .top .content h1 {
+#register .register .top .content h1 {
   font-size: 70px;
   font-weight: 200;
   color: black;
@@ -53,7 +53,7 @@
   margin-bottom: 10px;
 }
 
-#login .login .top .content p {
+#register .register .top .content p {
   font-size: 20px;
   font-weight: 200;
   color: #83899A;
@@ -62,7 +62,7 @@
   margin-bottom: 20px;
 }
 
-#login .login .top .content form {
+#register .register .top .content form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -73,11 +73,11 @@
   width: 400px;
 }
 
-#login .login .top .content form .input {
+#register .register .top .content form .input {
   margin: 10px 0;
 }
 
-#login .login .top .content form .input:first-child {
+#register .register .top .content form .input:first-child {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -86,7 +86,7 @@
           justify-content: space-between;
 }
 
-#login .login .top .content form .checkbox {
+#register .register .top .content form .checkbox {
   margin-top: 0px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -100,16 +100,12 @@
           align-items: center;
 }
 
-#login .login .top .content form .checkbox p {
+#register .register .top .content form .checkbox p {
   font-size: 15px;
   margin-bottom: 0;
 }
 
-#login .login .top .content form .checkbox p span {
-  color: #f50057;
-}
-
-#login .login .top .content form .buttons {
+#register .register .top .content form .buttons {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -121,44 +117,18 @@
       -ms-flex-pack: justify;
           justify-content: space-between;
   margin-top: 30px;
-}
-
-#login .login .top .content form .buttons button {
-  width: 100%;
-}
-
-#login .login .top .content form .buttons button:first-child {
-  margin-right: 10px;
-}
-
-#login .login .top .content .divider-container {
-  position: relative;
-  width: 100%;
-}
-
-#login .login .top .content .divider-container .text {
-  display: inline-block;
-  font-size: 15px;
-  margin: 20px 0;
-  padding: 0 10px;
-  background-color: white;
-}
-
-#login .login .top .content .divider-container .divider {
-  position: absolute;
-  width: 100%;
-  height: 1px;
-  background-color: rgba(131, 137, 154, 0.5);
-  top: 50%;
-  left: 0;
-  z-index: -1;
-}
-
-#login .login .top .content .login-button {
   margin-bottom: 70px;
 }
 
-#login .login .bottom {
+#register .register .top .content form .buttons button {
+  width: 100%;
+}
+
+#register .register .top .content form .buttons button:first-child {
+  margin-right: 10px;
+}
+
+#register .register .bottom {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -170,7 +140,7 @@
           align-items: center;
 }
 
-#login .login .bottom .img-container {
+#register .register .bottom .img-container {
   margin-left: auto;
   margin-right: auto;
   max-width: 100%;

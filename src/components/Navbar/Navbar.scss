@@ -1,0 +1,70 @@
+#navbar .navbar {
+    .appbar {
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    .toolbar {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        // min-height: 80px;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        color: black;
+
+        &.content-left {
+            .logo {
+                display: flex;
+                align-items: center;
+
+                h1 {
+                    font-size: 1.5rem;
+                    font-weight: 400;
+                }
+
+                svg {
+                    margin-right: 1rem;
+                }
+            }
+        }
+
+        &.content-middle {
+            a {
+                margin: 0 20px;
+            }
+
+            a:first-child {
+                margin-left: 0;
+            }
+
+            a:last-child {
+                margin-right: 0;
+            }
+        }
+
+        &.content-right {
+            a {
+                margin: 0 10px;
+            }
+
+            a:last-child {
+                margin-right: 0;
+            }
+        }
+
+        button {
+            span {
+                font-size: 1rem;
+                text-transform: none;
+                font-weight: 300;
+            }
+        }
+
+    }
+}

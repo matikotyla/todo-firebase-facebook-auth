@@ -1,0 +1,35 @@
+.loading {
+  margin-top: 40px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.loading p {
+  margin-top: 10px;
+  -webkit-animation: floating 2s linear infinite;
+          animation: floating 2s linear infinite;
+}
+
+@-webkit-keyframes floating {
+  0% {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px);
+  }
+  50% {
+    -webkit-transform: translateY(-10px);
+            transform: translateY(-10px);
+  }
+}
+
+@keyframes floating {
+  0% {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px);
+  }
+  50% {
+    -webkit-transform: translateY(-10px);
+            transform: translateY(-10px);
+  }
+}

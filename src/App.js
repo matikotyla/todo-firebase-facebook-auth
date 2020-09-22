@@ -4,22 +4,46 @@ import { UserProvider } from "./UserContext";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
-import List from "./components/List/List";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+
+import Navbar from "./components/Navbar/Navbar";
+import Home from "./pages/Home/Home";
+import Dashboard from "./components/Dashboard/Dashboard";
 import Login from "./components/Login/Login";
+import Register from "./pages/Register/Register";
 
 import "./App.css";
+
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: "#507DD7",
+        },
+    },
+});
 
 function App() {
     return (
         <UserProvider>
-            <div className="app">
-                <Router>
-                    <Switch>
-                        <PrivateRoute exact path="/" component={List} />
-                        <PublicRoute path="/login" component={Login} />
-                    </Switch>
-                </Router>
-            </div>
+            <ThemeProvider theme={theme}>
+                <div className="app">
+                    <Router>
+                        <Navbar />
+                        <Switch>
+                            <Route exact path="/" component={Home} />
+                            <PrivateRoute
+                                path="/dashboard"
+                                component={Dashboard}
+                            />
+                            <PublicRoute path="/login" component={Login} />
+                            <PublicRoute
+                                path="/register"
+                                component={Register}
+                            />
+                        </Switch>
+                    </Router>
+                </div>
+            </ThemeProvider>
         </UserProvider>
     );
 }

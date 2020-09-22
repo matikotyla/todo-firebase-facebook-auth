@@ -1,0 +1,76 @@
+#navbar .navbar .appbar {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+#navbar .navbar .toolbar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100%;
+}
+
+#navbar .navbar .content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: black;
+}
+
+#navbar .navbar .content.content-left .logo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#navbar .navbar .content.content-left .logo h1 {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+#navbar .navbar .content.content-left .logo svg {
+  margin-right: 1rem;
+}
+
+#navbar .navbar .content.content-middle a {
+  margin: 0 20px;
+}
+
+#navbar .navbar .content.content-middle a:first-child {
+  margin-left: 0;
+}
+
+#navbar .navbar .content.content-middle a:last-child {
+  margin-right: 0;
+}
+
+#navbar .navbar .content.content-right a {
+  margin: 0 10px;
+}
+
+#navbar .navbar .content.content-right a:last-child {
+  margin-right: 0;
+}
+
+#navbar .navbar .content button span {
+  font-size: 1rem;
+  text-transform: none;
+  font-weight: 300;
+}

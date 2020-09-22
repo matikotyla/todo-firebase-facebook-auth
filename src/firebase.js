@@ -1,7 +1,8 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import config from "./config";
 
-const firebaseConfig = {};
+const firebaseConfig = config;
 
 const fire = firebase.initializeApp(firebaseConfig);
 
