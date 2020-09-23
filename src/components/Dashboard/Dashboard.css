@@ -14,3 +14,11 @@
 .active {
   background-color: rgba(0, 0, 0, 0.07) !important;
 }
+
+.name-input {
+  margin-bottom: 10px;
+}
+
+.icon-input {
+  margin-bottom: 10px;
+}

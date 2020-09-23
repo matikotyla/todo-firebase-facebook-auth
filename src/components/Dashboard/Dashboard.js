@@ -70,7 +70,9 @@ const useStyles = makeStyles((theme) => ({
     },
     container: {
         display: "flex",
+        flexDirection: "column",
         flexWrap: "wrap",
+        // justifyContent: "center",
     },
     formControl: {
         margin: theme.spacing(1),
@@ -92,16 +94,12 @@ function Dashboard() {
     const [openAdd, setOpenAdd] = useState(false);
     const [openManage, setOpenManage] = useState(false);
 
+    const [name, setName] = useState("");
+    const [icon, setIcon] = useState("");
+
     const handleOpenAddClick = () => setOpenAdd(true);
     const handleCloseAddClick = () => setOpenAdd(false);
     const handleOpenManageClick = () => setOpenManage(!openManage);
-
-    // change to icon
-    const [age, setAge] = React.useState("");
-
-    const handleChange = (event) => {
-        setAge(Number(event.target.value) || "");
-    };
 
     const [columns, setColumns] = useState([
         {
@@ -151,7 +149,7 @@ function Dashboard() {
     const getUserTodos = async () => {
         try {
             const response = await axios.get(
-                "http://localhost:5000/todo-a2508/europe-west1/api",
+                "https://europe-west1-todo-a2508.cloudfunctions.net/api",
                 {
                     headers: {
                         Authorization: `Bearer ${await getToken()}`,
@@ -171,7 +169,7 @@ function Dashboard() {
         new Promise(async (resolve) => {
             axios
                 .post(
-                    "http://localhost:5000/todo-a2508/europe-west1/api/add",
+                    "https://europe-west1-todo-a2508.cloudfunctions.net/api/add",
                     {
                         project: project,
                         todo: newTodo.todo,
@@ -191,6 +189,7 @@ function Dashboard() {
                         prevData.forEach((data) => {
                             newData.push({
                                 name: data.name,
+                                icon: data.icon,
                                 todos: data.todos ? [...data.todos] : [],
                             });
                         });
@@ -208,7 +207,7 @@ function Dashboard() {
         new Promise(async (resolve) => {
             axios
                 .put(
-                    "http://localhost:5000/todo-a2508/europe-west1/api/edit",
+                    "https://europe-west1-todo-a2508.cloudfunctions.net/api/edit",
                     {
                         project: project,
                         index: oldTodo.tableData.id,
@@ -230,6 +229,7 @@ function Dashboard() {
                             prevData.forEach((data) => {
                                 newData.push({
                                     name: data.name,
+                                    icon: data.icon,
                                     todos: [...data.todos],
                                 });
                             });
@@ -256,7 +256,7 @@ function Dashboard() {
         new Promise(async (resolve) => {
             axios
                 .delete(
-                    "http://localhost:5000/todo-a2508/europe-west1/api/delete",
+                    "https://europe-west1-todo-a2508.cloudfunctions.net/api/delete",
                     {
                         headers: {
                             Authorization: `Bearer ${await getToken()}`,
@@ -276,6 +276,7 @@ function Dashboard() {
                         prevData.forEach((data) => {
                             newData.push({
                                 name: data.name,
+                                icon: data.icon,
                                 todos: [...data.todos],
                             });
                         });
@@ -307,12 +308,47 @@ function Dashboard() {
         return -1;
     };
 
+    const addProject = async (project, icon) => {
+        setIsTableLoading(true);
+        try {
+            await axios.post(
+                "https://europe-west1-todo-a2508.cloudfunctions.net/api/addProject",
+                {
+                    project,
+                    icon,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${await getToken()}`,
+                    },
+                }
+            );
+            // setProject(project);
+            let newData = [
+                ...data,
+                {
+                    name: project,
+                    icon: icon,
+                    todos: [],
+                },
+            ];
+            setData(newData);
+            setOpenAdd(false);
+            setName("");
+            setIcon("");
+            setIsTableLoading(false);
+        } catch (err) {
+            console.log(err);
+            setIsTableLoading(false);
+        }
+    };
+
     const deleteProject = async (project) => {
         setIsTableLoading(true);
         try {
             // const response =
             await axios.delete(
-                "http://localhost:5000/todo-a2508/europe-west1/api/deleteProject",
+                "https://europe-west1-todo-a2508.cloudfunctions.net/api/deleteProject",
                 {
                     headers: {
                         Authorization: `Bearer ${await getToken()}`,
@@ -364,7 +400,10 @@ function Dashboard() {
                                 key={proj.name}
                             >
                                 <ListItemIcon className={classes.icon}>
-                                    {index % 2 === 0 ? (
+                                    <span role="img" aria-label="emoji">
+                                        {proj.icon}
+                                    </span>
+                                    {/* {index % 2 === 0 ? (
                                         <span role="img" aria-label="emoji">
                                             🏠
                                         </span>
@@ -373,7 +412,7 @@ function Dashboard() {
                                             🍔
                                         </span>
                                         // <MailIcon />
-                                    )}
+                                    )} */}
                                 </ListItemIcon>
                                 <ListItemText primary={proj.name} />
                             </ListItem>
@@ -394,71 +433,52 @@ function Dashboard() {
                             open={openAdd}
                             onClose={handleCloseAddClick}
                         >
-                            <DialogTitle>Fill the form</DialogTitle>
+                            <DialogTitle
+                                style={{
+                                    padding: "16px 24px 0",
+                                    textAlign: "center",
+                                }}
+                            >
+                                Add new project
+                            </DialogTitle>
                             <DialogContent>
                                 <form className={classes.container}>
-                                    <FormControl
-                                        className={classes.formControl}
-                                    >
-                                        <InputLabel htmlFor="demo-dialog-native">
-                                            Age
-                                        </InputLabel>
-                                        <Select
-                                            native
-                                            value={age}
-                                            onChange={handleChange}
-                                            input={
-                                                <Input id="demo-dialog-native" />
+                                    <div className="name-input">
+                                        <TextField
+                                            value={icon}
+                                            id="icon-basic"
+                                            label="Icon"
+                                            onChange={(e) =>
+                                                setIcon(e.target.value)
                                             }
-                                        >
-                                            <option
-                                                aria-label="None"
-                                                value=""
-                                            />
-                                            <option value={10}>Ten</option>
-                                            <option value={20}>Twenty</option>
-                                            <option value={30}>Thirty</option>
-                                        </Select>
-                                    </FormControl>
-                                    <FormControl
-                                        className={classes.formControl}
-                                    >
-                                        <InputLabel id="demo-dialog-select-label">
-                                            Age
-                                        </InputLabel>
-                                        <Select
-                                            labelId="demo-dialog-select-label"
-                                            id="demo-dialog-select"
-                                            value={age}
-                                            onChange={handleChange}
-                                            input={<Input />}
-                                        >
-                                            <MenuItem value="">
-                                                <em>None</em>
-                                            </MenuItem>
-                                            <MenuItem value={10}>Ten</MenuItem>
-                                            <MenuItem value={20}>
-                                                Twenty
-                                            </MenuItem>
-                                            <MenuItem value={30}>
-                                                Thirty
-                                            </MenuItem>
-                                        </Select>
-                                    </FormControl>
+                                            autoComplete="off"
+                                        />
+                                    </div>
+                                    <div className="icon-input">
+                                        <TextField
+                                            value={name}
+                                            id="name-basic"
+                                            label="Name"
+                                            onChange={(e) =>
+                                                setName(e.target.value)
+                                            }
+                                            autoComplete="off"
+                                        />
+                                    </div>
                                 </form>
                             </DialogContent>
-                            <DialogActions>
+                            <DialogActions style={{ justifyContent: "center" }}>
                                 <Button
-                                    onClick={handleCloseAddClick}
+                                    onClick={() => addProject(name, icon)}
                                     color="primary"
                                 >
-                                    Cancel
+                                    Ok
                                 </Button>
                                 <Button
                                     onClick={handleCloseAddClick}
                                     color="primary"
                                 >
-                                    Ok
+                                    Cancel
                                 </Button>
                             </DialogActions>
                         </Dialog>

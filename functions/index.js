@@ -18,7 +18,6 @@ const app = require("express")();
 
 // cors policy
 const cors = require("cors");
-const { PriorityHigh } = require("@material-ui/icons");
 
 // check if user is a valid user with valid token
 const firebaseAuth = (req, res, next) => {
@@ -58,6 +57,11 @@ app.use(
         origin: ["http://localhost:3000", "http://your-production-website.com"],
     })
 );
+
+// register user
+app.post("/register", (req, res) => {
+    const { firstName, lastName, email, password, confirmPassword } = req.body;
+});
 
 // get user todos
 app.get("/", firebaseAuth, (req, res) => {
@@ -240,7 +244,7 @@ app.delete("/delete", firebaseAuth, (req, res) => {
 });
 
 app.post("/addProject", firebaseAuth, (req, res) => {
-    const { project } = req.body;
+    const { project, icon } = req.body;
 
     // check if the user exists
     db.collection("/users")
@@ -259,6 +263,7 @@ app.post("/addProject", firebaseAuth, (req, res) => {
                             // add new project
                             doc.ref.collection("projects").add({
                                 name: project,
+                                icon: icon,
                                 todos: [],
                             });
                             return res.status(200).json("Project added");
