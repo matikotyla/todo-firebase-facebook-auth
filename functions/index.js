@@ -133,7 +133,10 @@ app.post("/add", firebaseAuth, (req, res) => {
                             });
                         }
                     })
-                    .catch((err) => console.log(err));
+                    .catch((err) => {
+                        console.log(err);
+                        return res.status(400).json("Invalid data");
+                    });
 
                 return res.status(200).json("Todo added");
                 // if the doc with given user uid does not exist, create new doc, add new projects and new todos array and username
@@ -141,19 +144,27 @@ app.post("/add", firebaseAuth, (req, res) => {
                 doc.ref.set({
                     user: req.user.name,
                 });
-                doc.ref.collection("/projects").add({
-                    name: project,
-                    todos: [
-                        {
-                            todo,
-                            time,
-                            date,
-                        },
-                    ],
-                });
-                return res
-                    .status(200)
-                    .json("Doc created and project with todo added");
+                doc.ref
+                    .collection("/projects")
+                    .add({
+                        name: project,
+                        todos: [
+                            {
+                                todo,
+                                time,
+                                date,
+                            },
+                        ],
+                    })
+                    .then(() => {
+                        return res
+                            .status(200)
+                            .json("Doc created and project with todo added");
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        return res.status(400).json("Invalid data");
+                    });
             }
         })
         .catch((err) => {
