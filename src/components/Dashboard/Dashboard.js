@@ -17,6 +17,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import AddIcon from "@material-ui/icons/Add";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 import Loading from "../Loading/Loading";
 
@@ -284,11 +285,14 @@ function Dashboard() {
                 {/* <Toolbar /> */}
                 <div className={classes.drawerContainer}>
                     <List>
-                        {data.map((project, index) => (
+                        {data.map((proj, index) => (
                             <ListItem
-                                onClick={() => setProject(project.name)}
+                                className={
+                                    project === proj.name ? "active" : ""
+                                }
+                                onClick={() => setProject(proj.name)}
                                 button
-                                key={project.name}
+                                key={proj.name}
                             >
                                 <ListItemIcon className={classes.icon}>
                                     {index % 2 === 0 ? (
@@ -302,9 +306,12 @@ function Dashboard() {
                                         // <MailIcon />
                                     )}
                                 </ListItemIcon>
-                                <ListItemText primary={project.name} />
+                                <ListItemText primary={proj.name} />
                             </ListItem>
                         ))}
+                    </List>
+                    <Divider />
+                    <List>
                         <ListItem
                             onClick={() => console.log("Add project!")}
                             button
@@ -314,9 +321,6 @@ function Dashboard() {
                             </ListItemIcon>
                             <ListItemText primary="Add new project" />
                         </ListItem>
-                    </List>
-                    <Divider />
-                    <List>
                         {["All mail", "Trash", "Spam"].map((text, index) => (
                             <ListItem button key={text}>
                                 <ListItemIcon>

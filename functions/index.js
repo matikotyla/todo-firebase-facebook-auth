@@ -197,13 +197,13 @@ app.put("/edit", firebaseAuth, (req, res) => {
         });
 });
 
-app.delete("/delete", (req, res) => {
+app.delete("/delete", firebaseAuth, (req, res) => {
     // get todo index
     const { project, todo, time, date } = req.body;
 
     // check if the document with given id exists
     db.collection("/users")
-        .doc("Ygd5ksXPIOOAA34MsL4dxNOCh313")
+        .doc(req.user.uid)
         .collection("projects")
         .where("name", "==", project)
         .get()
@@ -224,6 +224,83 @@ app.delete("/delete", (req, res) => {
         })
         .catch((err) => {
             console.error(err);
+            return res.status(500).json(err);
+        });
+});
+
+app.post("/addProject", firebaseAuth, (req, res) => {
+    const { project } = req.body;
+
+    // check if the user exists
+    db.collection("/users")
+        .doc(req.user.uid)
+        .get()
+        .then((doc) => {
+            if (doc.exists) {
+                doc.ref
+                    .collection("projects")
+                    .where("name", "==", project)
+                    .get()
+                    .then((snapshot) => {
+                        if (snapshot.docs.length > 0) {
+                            return res.status(400).json("Project exists");
+                        } else {
+                            // add new project
+                            doc.ref.collection("projects").add({
+                                name: project,
+                                todos: [],
+                            });
+                            return res.status(200).json("Project added");
+                        }
+                    });
+            } else {
+                return res.status(400).json("Invalid uid");
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            return res.status(500).json(err);
+        });
+});
+
+app.delete("/deleteProject", firebaseAuth, (req, res) => {
+    const { project } = req.body;
+
+    db.collection("/users")
+        .doc(req.user.uid)
+        .get()
+        .then((doc) => {
+            if (doc.exists) {
+                doc.ref
+                    .collection("projects")
+                    .where("name", "==", project)
+                    .get()
+                    .then((snapshot) => {
+                        if (snapshot.docs.length > 0) {
+                            // delete project
+                            snapshot.docs[0].ref
+                                .delete()
+                                .then(() => {
+                                    return res
+                                        .status(200)
+                                        .json("Project deleted");
+                                })
+                                .catch((err) => {
+                                    console.log(err);
+                                    return res.status(500).json(err);
+                                });
+                        } else {
+                            return res
+                                .status(404)
+                                .json("Project does not exist");
+                        }
+                    });
+            } else {
+                return res.status(400).json("Invalid uid");
+            }
+        })
+        .catch((err) => {
+            console.log(err);
             return res.status(500).json(err);
         });
 });
