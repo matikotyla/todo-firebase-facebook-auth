@@ -12,12 +12,29 @@ import "./Login.css";
 function Login(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
 
     // make new facebook provider to login to the application
     let provider = new firebase.auth.FacebookAuthProvider();
     provider.setCustomParameters({
         display: "popup",
     });
+
+    const handleLoginWithEmailAndPasswordClick = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        fire.auth()
+            .signInWithEmailAndPassword(email, password)
+            .then((res) => {
+                setLoading(false);
+                props.history.push("/dashboard");
+            })
+            .catch((err) => {
+                console.error(err);
+                setLoading(false);
+            });
+    };
 
     // handle user authentication when the user wanna sign in
     const handleLoginClick = async () => {
@@ -51,7 +68,11 @@ function Login(props) {
                         <div className="content">
                             <h1>Login now</h1>
                             <p>Complete every task</p>
-                            <form>
+                            <form
+                                onSubmit={(e) =>
+                                    handleLoginWithEmailAndPasswordClick(e)
+                                }
+                            >
                                 <div className="input">
                                     <TextField
                                         id="standard-basic"
@@ -85,7 +106,12 @@ function Login(props) {
                                     </p>
                                 </div>
                                 <div className="buttons">
-                                    <Button variant="contained" color="primary">
+                                    <Button
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                        disabled={loading}
+                                    >
                                         Login
                                     </Button>
                                     <Button

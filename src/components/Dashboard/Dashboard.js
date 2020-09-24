@@ -167,14 +167,25 @@ function Dashboard() {
     // add new todo to the database
     const onMyRowAdd = (newTodo) =>
         new Promise(async (resolve) => {
+            newTodo.todo =
+                newTodo.todo && newTodo.todo !== ""
+                    ? newTodo.todo
+                    : "nothing? 😠";
+            newTodo.time =
+                newTodo.time && newTodo.time !== ""
+                    ? newTodo.time
+                    : new Date().toISOString();
+            newTodo.date =
+                newTodo.date && newTodo.date !== ""
+                    ? newTodo.date
+                    : new Date().toISOString();
+
             axios
                 .post(
                     "https://europe-west1-todo-a2508.cloudfunctions.net/api/add",
                     {
                         project: project,
-                        todo: newTodo.todo,
-                        time: newTodo.time,
-                        date: newTodo.date,
+                        ...newTodo,
                     },
                     {
                         headers: {
@@ -205,15 +216,26 @@ function Dashboard() {
 
     const onMyRowUpdate = (newTodo, oldTodo) =>
         new Promise(async (resolve) => {
+            newTodo.todo =
+                newTodo.todo && newTodo.todo !== ""
+                    ? newTodo.todo
+                    : "nothing? 😠";
+            newTodo.time =
+                newTodo.time && newTodo.time !== ""
+                    ? newTodo.time
+                    : new Date().toISOString();
+            newTodo.date =
+                newTodo.date && newTodo.date !== ""
+                    ? newTodo.date
+                    : new Date().toISOString();
+
             axios
                 .put(
                     "https://europe-west1-todo-a2508.cloudfunctions.net/api/edit",
                     {
                         project: project,
                         index: oldTodo.tableData.id,
-                        todo: newTodo.todo,
-                        time: newTodo.time,
-                        date: newTodo.date,
+                        ...newTodo,
                     },
                     {
                         headers: {

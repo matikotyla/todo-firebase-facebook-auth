@@ -2,18 +2,44 @@ import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Checkbox from "@material-ui/core/Checkbox";
+import axios from "axios";
 
 import { ReactComponent as RegisterImage } from "../../images/register.svg";
 
 import "./Register.css";
 
-function Register() {
+function Register(props) {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [terms, setTerms] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const handleUserRegistration = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        try {
+            const res = await axios.post(
+                "https://europe-west1-todo-a2508.cloudfunctions.net/api/register",
+                {
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                    confirmPassword,
+                }
+            );
+            setLoading(false);
+            props.history.push("/login");
+            // or just sign in the user
+        } catch (err) {
+            console.log(err.response);
+            setLoading(false);
+        }
+    };
 
     return (
         <div id="register">
@@ -22,7 +48,7 @@ function Register() {
                     <div className="content">
                         <h1>Create account</h1>
                         <p>Start your journey right now</p>
-                        <form>
+                        <form onSubmit={(e) => handleUserRegistration(e)}>
                             <div className="input">
                                 <TextField
                                     id="standard-basic"
@@ -95,7 +121,12 @@ function Register() {
                                 <p>I agree to the terms and Privacy Policy</p>
                             </div>
                             <div className="buttons">
-                                <Button variant="contained" color="primary">
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                    disabled={loading}
+                                >
                                     Register
                                 </Button>
                                 <Button variant="contained" color="secondary">

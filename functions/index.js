@@ -174,7 +174,7 @@ app.post("/login", (req, res) => {
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then((data) => {
-            console.log(firebase.auth().currentUser.displayName);
+            // console.log(firebase.auth().currentUser.displayName);
             return data.user.getIdToken();
         })
         .then((token) => {
