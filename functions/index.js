@@ -1,8 +1,13 @@
+const firebase = require("firebase");
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
 // service account to test the firebase functions using firebase serve
 const serviceAccount = require("./serviceAccountKey.json");
+
+const config = require("./config");
+
+firebase.initializeApp(config);
 
 // initialize firebase application using given credentials
 admin.initializeApp({
@@ -58,9 +63,137 @@ app.use(
     })
 );
 
+const isEmail = (email) => {
+    const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (email.match(regEx)) return true;
+    else return false;
+};
+
+const isEmpty = (string) => {
+    if (string === null || string.trim() === "") return true;
+    else return false;
+};
+
 // register user
 app.post("/register", (req, res) => {
     const { firstName, lastName, email, password, confirmPassword } = req.body;
+
+    let errors = {};
+
+    if (isEmpty(firstName)) {
+        errors.firstName = "first name must not be empty";
+    }
+
+    if (isEmpty(lastName)) {
+        errors.lastName = "last name must not be empty";
+    }
+
+    if (isEmpty(email)) {
+        errors.email = "must not be empty";
+    } else if (!isEmail(email)) {
+        errors.email = "must be a valid email address";
+    }
+
+    if (isEmpty(password)) errors.password = "must not be empty";
+    if (password !== confirmPassword) {
+        errors.confirmPassword = "passwords must match";
+    }
+
+    const valid = Object.keys(errors).length === 0 ? true : false;
+
+    if (!valid) return res.status(400).json(errors);
+
+    let token, userId;
+    // const newUser = {
+    //     user: `${firstName} ${lastName}`,
+    //     email,
+    //     password,
+    //     confirmPassword,
+    // };
+
+    // check if the email exists
+    firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then((data) => {
+            userId = data.user.uid;
+            return data.user.getIdToken();
+        })
+        .then((idToken) => {
+            token = idToken;
+            return firebase.auth().currentUser.updateProfile({
+                displayName: `${firstName} ${lastName}`,
+            });
+        })
+        .then(() => {
+            const userData = {
+                user: `${firstName} ${lastName}`,
+            };
+            return db.doc(`/users/${userId}`).set(userData);
+        })
+        .then(() => {
+            return db.doc(`/users/${userId}`).collection("/projects");
+        })
+        .then(() => {
+            return res.status(201).json({
+                token,
+            });
+        })
+        .catch((err) => {
+            console.error(err);
+            if (err.code === "auth/email-already-in-use") {
+                return res.status(400).json({
+                    email: "Email already in use",
+                });
+            } else {
+                return res.status(500).json({
+                    general: "Something went wrong",
+                });
+            }
+        });
+});
+
+app.post("/login", (req, res) => {
+    const { email, password } = req.body;
+
+    let errors = {};
+
+    if (isEmpty(email)) {
+        errors.email = "must not be empty";
+    } else if (!isEmail(email)) {
+        errors.email = "must be a valid email address";
+    }
+
+    if (isEmpty(password)) errors.password = "must not be empty";
+
+    const valid = Object.keys(errors).length === 0 ? true : false;
+
+    if (!valid) return res.status(400).json(errors);
+
+    firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then((data) => {
+            console.log(firebase.auth().currentUser.displayName);
+            return data.user.getIdToken();
+        })
+        .then((token) => {
+            return res.json({
+                token,
+            });
+        })
+        .catch((err) => {
+            console.error(err);
+            if (err.code === "auth/wrong-password") {
+                return res.status(403).json({
+                    general: "Wrong credentials",
+                });
+            } else {
+                return res.status(500).json({
+                    general: "Something went wrong",
+                });
+            }
+        });
 });
 
 // get user todos

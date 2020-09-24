@@ -82,8 +82,8 @@ npm start
 
 remember to make sure that you have got your own firebase project. As I mentioned before, you have to change `config.js` file with your firebase config data and `serviceAccountKey.json` with your key to make this application work properly. You have to also change url to fetch data from firebase to your own url.
 
-## How does it look like?
+<!-- ## How does it look like?
 
 You may also see the application here, but I highly recommend you use the live demo mentioned above
 
-![](https://github.com/maticoder/todo-firebase-facebook-auth/blob/master/how.gif)
+![](https://github.com/maticoder/todo-firebase-facebook-auth/blob/master/how.gif) -->
