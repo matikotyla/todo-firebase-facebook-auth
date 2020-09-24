@@ -7,7 +7,7 @@ This is a Todo application with firebase functions and facebook authentication. 
 ## Live Demo
 
 You may check the live demo of this application, simply click the link below
-[link to application!](https://gallant-golick-d31a4e.netlify.app/)
+[link to application!](https://todo-maticoder.netlify.app/)
 
 You can log in to the application using your facebook account, but if you want, you can also use the user, made specially for this purpose, so you can easier see how the application looks like, just go to login section and fill in the form using this data
 

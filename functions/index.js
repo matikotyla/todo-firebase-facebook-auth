@@ -59,10 +59,7 @@ const firebaseAuth = (req, res, next) => {
 app.use(
     cors({
         credentials: true,
-        origin: [
-            "http://localhost:3000",
-            "https://gallant-golick-d31a4e.netlify.app",
-        ],
+        origin: ["http://localhost:3000", "https://todo-maticoder.netlify.app"],
     })
 );
 
