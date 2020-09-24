@@ -2,12 +2,12 @@
 
 This is a Todo application with firebase functions and facebook authentication. You may view, add, edit or delete your tasks you wanna do. You can also group your task in different projects, so they are easier to maintain. Everything is connected to the firebase and is stored with firestore. Your changes are immediately visible in the firebase databse. To log in to application you have to authenticate yourself with facebook.
 
-The email and password authentication is not ready yet, so you must authenticate yourself using your facebook account. Email and password authentication will be provided soon!
+<!-- The email and password authentication is not ready yet, so you must authenticate yourself using your facebook account. Email and password authentication will be provided soon! -->
 
 ## Live Demo
 
 You may check the live demo of this application, simply click the link below
-[link to application!](http://google.com)
+[link to application!](https://gallant-golick-d31a4e.netlify.app/)
 
 You can log in to the application using your facebook account, but if you want, you can also use the user, made specially for this purpose, so you can easier see how the application looks like, just go to login section and fill in the form using this data
 
